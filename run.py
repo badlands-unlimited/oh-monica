@@ -1,4 +1,4 @@
-from flask import Flask, request, redirect
+from flask import Flask, request, redirect, render_template
 from twilio.twiml.messaging_response import MessagingResponse
 from flask_basicauth import BasicAuth
 import os, dataset
@@ -33,7 +33,7 @@ def hello_monkey():
 def add_phone():
     """Respond to incoming calls with a simple text message."""
     
-    return "testing 1 2 3"
+    return render_template('addnumber.html')
 
 def monica(src, maxletters=None):
     tome = {
