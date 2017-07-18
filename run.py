@@ -17,7 +17,7 @@ basic_auth = BasicAuth(app)
 # INITIALIZE DB #
 #################
 
-db = dataset.connect(('sqlite:///%s' % os.environ.get('DATABASE_URL')))
+db = dataset.connect(('postgres:///%s' % os.environ.get('DATABASE_URL')))
 
 @app.route("/", methods=['GET', 'POST'])
 def hello_monkey():
