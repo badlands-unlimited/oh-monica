@@ -33,7 +33,11 @@ def hello_monkey():
 def add_phone():
     """Respond to incoming calls with a simple text message."""
     if request.method == 'POST':
-        return "yerrrp"
+        area = request.form.get('area')
+        first = request.form.get('first')
+        last = request.form.get('last')
+        name = request.form.get('name')
+        return "+1%s%s%s" % (area, first, last)
     else:
         return render_template('addnumber.html')
 
