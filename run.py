@@ -4,8 +4,8 @@ from flask_basicauth import BasicAuth
 import os, dataset
 
 app = Flask(__name__)
-app.config['BASIC_AUTH_USERNAME'] = os.environ['USER']
-app.config['BASIC_AUTH_PASSWORD'] = os.environ['PASS']
+app.config['BASIC_AUTH_USERNAME'] = os.environ.get('USER')
+app.config['BASIC_AUTH_PASSWORD'] = os.environ.get('PASS')
 
 basic_auth = BasicAuth(app)
 
@@ -100,5 +100,6 @@ def monica(src, maxletters=None):
 def acknowledge():
     pass
 
-if __name__ == "__main__":
-    app.run(debug=True)
+if __name__ == '__main__':
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port)
