@@ -18,6 +18,7 @@ basic_auth = BasicAuth(app)
 #################
 
 db = dataset.connect(os.environ['DATABASE_URL'])
+table = db['users']
 
 @app.route("/", methods=['GET', 'POST'])
 def hello_monkey():
@@ -31,7 +32,7 @@ def hello_monkey():
 @basic_auth.required
 def add_phone():
     """Respond to incoming calls with a simple text message."""
-    db.create_table('users', primary_id='phone', primary_type="String")
+    
     return "testing 1 2 3"
 
 def monica(src, maxletters=None):
