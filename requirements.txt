@@ -8,6 +8,7 @@ cryptography==2.0
 dataset==0.8.0
 enum34==1.1.6
 Flask==0.12.2
+Flask-BasicAuth==0.2.0
 idna==2.5
 ipaddress==1.0.18
 itsdangerous==0.24

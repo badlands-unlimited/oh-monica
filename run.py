@@ -1,3 +1,27 @@
+from flask import Flask, request, redirect
+from twilio.twiml.messaging_response import MessagingResponse
+from flask_basicauth import BasicAuth
+import os, dataset
+
+app = Flask(__name__)
+app.config['BASIC_AUTH_USERNAME'] = os.environ['USER']
+app.config['BASIC_AUTH_PASSWORD'] = os.environ['PASS']
+
+basic_auth = BasicAuth(app)
+
+@app.route("/", methods=['GET', 'POST'])
+def hello_monkey():
+    """Respond to incoming calls with a simple text message."""
+
+    resp = MessagingResponse().message("Hello, Mobile Monkey")
+    return str(resp)
+
+@app.route("/new", methods=['GET', 'POST'])
+@basic_auth.required
+def add_phone():
+    """Respond to incoming calls with a simple text message."""
+
+    return "testing 1 2 3"
 
 def monica(src, maxletters=None):
 	tome = {
@@ -73,9 +97,13 @@ def monica(src, maxletters=None):
 		her.append(call)
 	return her
 
+def acknowledge():
+	pass
+
 def monica_test():
 	print monica("abcde", 2)
 	print monica("Badlands")
 	print monica("testing 1 2 3", 2)
-	
-monica_test()
+
+if __name__ == "__main__":
+    app.run(debug=True)
