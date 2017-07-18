@@ -67,14 +67,15 @@ def monica(src, maxletters=None):
 		58: "slower?",
 	}
 	her = []
-	for c in src[:maxletters]:
+	acceptable = ''.join(c for c in src if tome.get(ord(c)))
+	for c in acceptable[:maxletters]:
 		call = tome.get(ord(c))
-		if call:
-			her.append(call)
+		her.append(call)
 	return her
 
 def monica_test():
 	print monica("abcde", 2)
 	print monica("Badlands")
-
+	print monica("testing 1 2 3", 2)
+	
 monica_test()
