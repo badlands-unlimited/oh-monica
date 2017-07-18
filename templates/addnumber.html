@@ -4,11 +4,13 @@
 		<title>new phone who dis</title>
 		<style type="text/css">
 			#container {
-				border: 2px solid black;
+				border: 3px solid black;
 				width: 50%;
 				max-width: 800px;
+				height: 200px;
+				overflow: auto;
 				margin: 0 auto;
-				margin-top: 100px;
+				margin-top: calc((100vh - 200px) / 2);
 				padding: 1em;
 				text-align: center;
 			}
@@ -17,8 +19,8 @@
 	<body>
 		<div id="container">
 			<form>
-				telephone: (<input type="text" name="area" maxlength="3" size="3" />) - <input type="tel" name="first" maxlength="3" size="3" /> - <input type="tel" name="last" maxlength="4" size="4" /> <br /><br />
-				name: <input type="text" name="name" />
+				<i>telephone</i>: (<input type="text" name="area" maxlength="3" size="3" />) - <input type="tel" name="first" maxlength="3" size="3" /> - <input type="tel" name="last" maxlength="4" size="4" /> <br /><br />
+				<i>name</i>: <input type="text" name="name" />
 				<input type="submit" />
 			</form>
 		</div>
