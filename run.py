@@ -32,8 +32,10 @@ def hello_monkey():
 @basic_auth.required
 def add_phone():
     """Respond to incoming calls with a simple text message."""
-    
-    return render_template('addnumber.html')
+    if request.method == 'POST':
+        return "yerrrp"
+    else:
+        return render_template('addnumber.html')
 
 def monica(src, maxletters=None):
     tome = {
