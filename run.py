@@ -3,24 +3,35 @@ from twilio.twiml.messaging_response import MessagingResponse
 from flask_basicauth import BasicAuth
 import os, dataset
 
+##################
+# INITIALIZE APP #
+##################
+
 app = Flask(__name__)
 app.config['BASIC_AUTH_USERNAME'] = os.environ.get('USER')
 app.config['BASIC_AUTH_PASSWORD'] = os.environ.get('PASS')
 
 basic_auth = BasicAuth(app)
 
+#################
+# INITIALIZE DB #
+#################
+
+db = dataset.connect(('sqlite:///%s' % os.environ.get('DATABASE_URL')))
+
 @app.route("/", methods=['GET', 'POST'])
 def hello_monkey():
     """Respond to incoming calls with a simple text message."""
 
-    resp = MessagingResponse().message("Hello, Mobile Monkey")
-    return str(resp)
+    #resp = MessagingResponse().message("Hello, Mobile Monkey")
+    #return str(resp)
+    return "passing for now!"
 
 @app.route("/new", methods=['GET', 'POST'])
 @basic_auth.required
 def add_phone():
     """Respond to incoming calls with a simple text message."""
-
+    db.create_table('users', primary_id='phone', primary_type="String")
     return "testing 1 2 3"
 
 def monica(src, maxletters=None):
