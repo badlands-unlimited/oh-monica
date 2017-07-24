@@ -1,7 +1,7 @@
 from flask import Flask, request, redirect, render_template
 from twilio.twiml.messaging_response import MessagingResponse
 from flask_basicauth import BasicAuth
-import os, dataset
+import os, dataset, tasks
 
 ##################
 # INITIALIZE APP #
@@ -21,12 +21,43 @@ db = dataset.connect(os.environ['DATABASE_URL'])
 table = db['users']
 
 @app.route("/", methods=['GET', 'POST'])
-def hello_monkey():
+def discuss():
     """Respond to incoming calls with a simple text message."""
-
-    #resp = MessagingResponse().message("Hello, Mobile Monkey")
-    #return str(resp)
-    return "passing for now!"
+    body = request.values.get('Body', None)
+    from_number = request.values.get('From')
+    user = table.find_one(number=from_number)
+    if user:
+        question = is_question(body)
+        state = user['stage']
+        if state == 'where_were_u':
+            if question:
+                (state, response) = formulate_answer(body)
+            else:
+                response = monica(body, 2)
+                pass
+                # state should be monica_2
+        elif state == 'monica':
+            pass
+        elif state == 'monica_2':
+            if question:
+                (state, response) = formulate_answer(body)
+            else:
+                response = monica(body, 5)
+                pass
+            pass
+        elif state == 'monica_5':
+            pass
+        elif state == 'come_on':
+            pass
+        elif state == 'why_the_q':
+            pass
+        elif state == 'u_like_that':
+            pass
+        elif state == 'srsly':
+            pass
+    else:
+        resp = MessagingResponse().message()
+    return str(resp)
 
 @app.route("/new", methods=['GET', 'POST'])
 @basic_auth.required
@@ -55,6 +86,27 @@ def whomst():
         users.append(row)
 
     return render_template('whomst.html', users=users)
+
+def formulate_answer(body):
+    if body.lower.startswith('who'):
+        return ("monica", "monica!")
+    else:
+        question_body = ""
+        response = "Why the %s?" % question_body
+        return ("why_the_q", response)
+
+def is_question(body):
+    content = body.lower()
+    if content.endswith("?") \
+    or content.startswith("who") \
+    or content.startswith('what') \
+    or content.startswith('wat') \
+    or content.startswith("why") \
+    or content.startswith('where') \
+    or content.startswith('when'):
+        return True
+    else:
+        return False
 
 def monica(src, maxletters=None):
     tome = {
