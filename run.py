@@ -33,7 +33,7 @@ def hello_monkey():
 def add_phone():
     """Respond to incoming calls with a simple text message."""
     if request.method == 'POST':
-        phone = "%s%s%s" (request.form['area'], request.form['first'], request.form['last'])
+        phone = "%s%s%s" % (request.form['area'], request.form['first'], request.form['last'])
         if all(c.isdigit() for c in phone):
             data = dict([
                 ("phone", "+1%s%s%s" % (area, first, last)),
