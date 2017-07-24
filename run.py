@@ -48,10 +48,12 @@ def add_phone():
         return render_template('addnumber.html')
 
 @app.route("/whomst", methods=['GET'])
+@basic_auth.required
 def whomst():
     users = []
     for row in table.all():
         users.append(row)
+
     return render_template('whomst.html', users=users)
 
 def monica(src, maxletters=None):
