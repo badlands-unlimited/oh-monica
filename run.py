@@ -36,14 +36,14 @@ def add_phone():
         phone = "%s%s%s" % (request.form['area'], request.form['first'], request.form['last'])
         if all(c.isdigit() for c in phone):
             data = dict([
-                ("phone", "+1%sg" % phone),
+                ("phone", "+1%s" % phone),
                 ("name", request.form['name']),
                 ("stage", "where_were_u"),
             ])
             table.upsert(data, ['phone'])
-            return "added user!"
+            return render_template('addeduser.html', title="congrats!", dialog="you successfully added a user. we're all very proud.")
         else:
-            return "please give a real phone number, dingo"
+            return render_template('addeduser.html', title="uhhh", dialog="not a real number. <a href='https://oh-monica.herokuapp.com/new'>try again?</a>")
     else:
         return render_template('addnumber.html')
 
