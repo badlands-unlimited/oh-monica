@@ -36,7 +36,7 @@ def add_phone():
         phone = "%s%s%s" % (request.form['area'], request.form['first'], request.form['last'])
         if all(c.isdigit() for c in phone):
             data = dict([
-                ("phone", "+1%s%s%s" % (area, first, last)),
+                ("phone", "+1%s%s%s" % phone),
                 ("name", request.form['name']),
                 ("stage", "where_were_u"),
             ])
