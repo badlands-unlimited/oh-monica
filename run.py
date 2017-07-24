@@ -33,13 +33,26 @@ def hello_monkey():
 def add_phone():
     """Respond to incoming calls with a simple text message."""
     if request.method == 'POST':
-        area = request.form.get('area')
-        first = request.form.get('first')
-        last = request.form.get('last')
-        name = request.form.get('name')
-        return "+1%s%s%s" % (area, first, last)
+        phone = "%s%s%s" (request.form['area'], request.form['first'], request.form['last'])
+        if all(c.isdigit() for c in phone):
+            data = dict([
+                ("phone", "+1%s%s%s" % (area, first, last)),
+                ("name", request.form['name']),
+                ("stage", "where_were_u"),
+            ])
+            table.upsert(data)
+            return "added user!"
+        else:
+            return "please give a real phone number, dingo"
     else:
         return render_template('addnumber.html')
+
+@app.route("/whomst", methods=['GET'])
+def whomst():
+    users = []
+    for row in table.all():
+        users.append(row)
+    return render_template('whomst.html', users=users)
 
 def monica(src, maxletters=None):
     tome = {
