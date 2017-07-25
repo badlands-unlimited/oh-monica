@@ -34,6 +34,7 @@ phone = os.environ.get('TWILIO_PHONE')
 def discuss():
     body = request.values.get('Body', None)
     from_number = request.values.get('From')
+    print from_number
     response = ""
     # MAKE SURE USER IS INCLUDED
     user = table.find_one(number=from_number)
