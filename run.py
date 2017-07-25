@@ -41,7 +41,7 @@ def discuss():
     if user:
         print user
         question = is_question(body)
-        state = user['stage']
+        state = user['state']
         if state == 'where_were_u':
             if question:
                 (new_state, response) = formulate_answer(body)
