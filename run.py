@@ -20,11 +20,21 @@ basic_auth = BasicAuth(app)
 db = dataset.connect(os.environ['DATABASE_URL'])
 table = db['users']
 
+#####################
+# INITIALIZE TWILIO #
+#####################
+
+account_sid = os.environ.get('TWILIO_SID')
+auth_token = os.environ.get('TWILIO_AUTH')
+client = Client(account_sid, auth_token)
+phone = os.environ.get('TWILIO_PHONE')
+
 @app.route("/", methods=['GET', 'POST'])
 def discuss():
-    """Respond to incoming calls with a simple text message."""
     body = request.values.get('Body', None)
     from_number = request.values.get('From')
+    response = ""
+    # MAKE SURE USER IS INCLUDED
     user = table.find_one(number=from_number)
     if user:
         question = is_question(body)
@@ -34,7 +44,7 @@ def discuss():
                 (state, response) = formulate_answer(body)
             else:
                 response = monica(body, 2)
-                pass
+                
                 # state should be monica_2
         elif state == 'monica':
             pass
@@ -54,9 +64,8 @@ def discuss():
         elif state == 'u_like_that':
             pass
         elif state == 'srsly':
-            pass
-    else:
-        resp = MessagingResponse().message()
+            tasks.respond.apply_async((from_number, state, 'where_were_u', 'where where u', table), countdown=25)
+    resp = MessagingResponse().message(response)
     return str(resp)
 
 @app.route("/new", methods=['GET', 'POST'])
