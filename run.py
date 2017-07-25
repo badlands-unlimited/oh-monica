@@ -199,7 +199,7 @@ def monica(src, maxletters=None):
     for c in acceptable[:maxletters]:
         call = tome.get(ord(c))
         her.append(call)
-    return her
+    return " ".join(her)
 
 def acknowledge():
     pass
