@@ -54,11 +54,16 @@ def discuss():
             pass
         elif state == 'monica_2':
             if question:
-                (state, response) = formulate_answer(body)
+                (new_state, response) = formulate_answer(body)
+                update_state(user, new_state)
             else:
                 response = monica(body, 5)
+                update_state(user, 'monica_5')
+
         elif state == 'monica_5':
-            pass
+            response = 'srsly'
+            update_state(user, 'srsly')
+            tasks.respond.apply_async((from_number, state, 'where_were_u', 'where where u', table), countdown=25)
         elif state == 'come_on':
             pass
         elif state == 'why_the_q':
@@ -66,7 +71,8 @@ def discuss():
         elif state == 'u_like_that':
             pass
         elif state == 'srsly':
-            tasks.respond.apply_async((from_number, state, 'where_were_u', 'where where u', table), countdown=25)
+            response = 'good girl'
+            update_state(user, 'monica_2')
     resp = MessagingResponse()
     resp.message(response)
     print response
