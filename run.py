@@ -43,10 +43,11 @@ def discuss():
         state = user['stage']
         if state == 'where_were_u':
             if question:
-                (state, response) = formulate_answer(body)
+                (new_state, response) = formulate_answer(body)
+                update_state(user, new_state)
             else:
                 response = monica(body, 2)
-                
+                update_state(user, "monica_2")
                 # state should be monica_2
         elif state == 'monica':
             pass
@@ -55,8 +56,6 @@ def discuss():
                 (state, response) = formulate_answer(body)
             else:
                 response = monica(body, 5)
-                pass
-            pass
         elif state == 'monica_5':
             pass
         elif state == 'come_on':
@@ -97,6 +96,11 @@ def whomst():
         users.append(row)
 
     return render_template('whomst.html', users=users)
+
+def update_state(user, state):
+    data = { 'phone': user['phone'], 'state': state }
+    table.upsert(data, ['phone'])
+    return True
 
 def formulate_answer(body):
     if body.lower.startswith('who'):
