@@ -10,13 +10,12 @@ phone = os.environ.get('TWILIO_PHONE')
 
 # CELERY APP
 app = celery.Celery('monica')
-app.conf.update(BROKER_URL=os.environ['REDIS_URL'],
-                CELERY_RESULT_BACKEND=os.environ['REDIS_URL'])
+app.conf.update(BROKER_URL=os.environ['REDIS_URL'], CELERY_RESULT_BACKEND=os.environ['REDIS_URL'])
 
 @app.task
 def respond(number, old_state, new_state, message, table):
-    user = table.find_one(number=number)
     # make sure there hasn't been a timeout
+    user = table.find_one(number=number)
     if user and user['state'] == old_state:
         data = {'number':number, 'state':new_state}
         table.upsert(data, ['number'])
