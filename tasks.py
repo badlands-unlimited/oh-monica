@@ -1,6 +1,11 @@
 import celery
 import os
+import dataset
 from twilio.rest import Client
+
+# DATABASE
+db = dataset.connect(os.environ['DATABASE_URL'])
+table = db['users']
 
 # TWILIO
 account_sid = os.environ.get('TWILIO_SID')
@@ -13,7 +18,7 @@ app = celery.Celery('monica')
 app.conf.update(BROKER_URL=os.environ['REDIS_URL'], CELERY_RESULT_BACKEND=os.environ['REDIS_URL'])
 
 @app.task
-def respond(number, old_state, new_state, message, table):
+def respond(number, old_state, new_state, message):
     # make sure there hasn't been a timeout
     user = table.find_one(number=number)
     if user and user['state'] == old_state:

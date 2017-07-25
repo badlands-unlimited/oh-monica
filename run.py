@@ -63,7 +63,7 @@ def discuss():
         elif state == 'monica_5':
             response = 'srsly'
             update_state(user, 'srsly')
-            tasks.respond.apply_async((from_number, state, 'where_were_u', 'where where u', table), countdown=25)
+            tasks.respond.apply_async((from_number, state, 'where_were_u', 'where where u'), countdown=25)
         elif state == 'come_on':
             pass
         elif state == 'why_the_q':
@@ -89,7 +89,7 @@ def add_phone():
             data = dict([
                 ("phone", "+1%s" % phone),
                 ("name", request.form['name']),
-                ("stage", "where_were_u"),
+                ("state", "where_were_u"),
             ])
             table.upsert(data, ['phone'])
             return render_template('addeduser.html', title="congrats!", dialog="you successfully added a user. we're all very proud.")
