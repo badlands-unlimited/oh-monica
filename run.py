@@ -62,8 +62,9 @@ def discuss():
 
         elif state == 'monica_5':
             response = 'srsly'
-            update_state(user, 'srsly')
-            tasks.respond.apply_async((from_number, state, 'where_were_u', 'where where u'), countdown=25)
+            new_state = 'srsly'
+            update_state(user, new_state)
+            tasks.respond.apply_async((from_number, new_state, 'where_were_u', 'where where u'), countdown=25)
         elif state == 'come_on':
             pass
         elif state == 'why_the_q':
