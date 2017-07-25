@@ -19,9 +19,9 @@ app.conf.update(BROKER_URL=os.environ['REDIS_URL'], CELERY_RESULT_BACKEND=os.env
 
 @app.task
 def respond(number, old_state, new_state, message):
-	print "responding asyncronisousfslfsaf to %s !!!: %s" % (number, message)
+    print "responding asyncronisousfslfsaf to %s !!!: %s" % (number, message)
     # make sure there hasn't been a timeout
-    user = table.find_one(number=number)
+    user = table.find_one(phone=number)
     if user and user['state'] == old_state:
         data = {'number':number, 'state':new_state}
         table.upsert(data, ['number'])
