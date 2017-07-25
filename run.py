@@ -38,6 +38,7 @@ def discuss():
     # MAKE SURE USER IS INCLUDED
     user = table.find_one(number=from_number)
     if user:
+        print user
         question = is_question(body)
         state = user['stage']
         if state == 'where_were_u':
