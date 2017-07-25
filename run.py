@@ -67,6 +67,7 @@ def discuss():
         elif state == 'srsly':
             tasks.respond.apply_async((from_number, state, 'where_were_u', 'where where u', table), countdown=25)
     resp = MessagingResponse().message(response)
+    print response
     print str(resp)
     return str(resp)
 
