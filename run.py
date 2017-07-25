@@ -1,5 +1,6 @@
 from flask import Flask, request, redirect, render_template
 from twilio.twiml.messaging_response import MessagingResponse
+from twilio.rest import Client
 from flask_basicauth import BasicAuth
 import os, dataset, tasks
 
