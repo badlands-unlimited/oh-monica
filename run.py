@@ -74,6 +74,8 @@ def discuss():
         elif state == 'srsly':
             response = 'good girl'
             update_state(user, 'monica_2')
+    else: 
+        response = monica(body, 2)
     resp = MessagingResponse()
     resp.message(response)
     print response
