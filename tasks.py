@@ -15,14 +15,14 @@ app.conf.update(BROKER_URL=os.environ['REDIS_URL'],
 
 @app.task
 def respond(number, old_state, new_state, message, table):
-	user = table.find_one(number=number)
-	# make sure there hasn't been a timeout
+    user = table.find_one(number=number)
+    # make sure there hasn't been a timeout
     if user and user['state'] == old_state:
-    	data = {'number':number, 'state':new_state}
-    	table.upsert(data, ['number'])
+        data = {'number':number, 'state':new_state}
+        table.upsert(data, ['number'])
 
-		client.messages.create(
-    	to=number,
-    	from_=phone,
-    	body=message)
+        client.messages.create(
+        to=number,
+        from_=phone,
+        body=message)
 
