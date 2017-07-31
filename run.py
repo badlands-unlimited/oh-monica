@@ -42,7 +42,7 @@ def discuss():
         print user
         question = is_question(body)
         state = user['state']
-        if body = 'test':
+        if body == 'test':
             tasks.respond.apply_async((from_number, state, 'where_were_u', 'testing 1, 2, 3'), countdown=25)
         elif state == 'where_were_u':
             if question:
