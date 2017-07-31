@@ -1,4 +1,4 @@
-import celery
+from celery import Celery
 import os
 import dataset
 from twilio.rest import Client
@@ -14,10 +14,10 @@ client = Client(account_sid, auth_token)
 phone = os.environ.get('TWILIO_PHONE')
 
 # CELERY APP
-app = celery.Celery('monica')
-app.conf.update(BROKER_URL=os.environ['REDIS_URL'], CELERY_RESULT_BACKEND=os.environ['REDIS_URL'])
+celery = Celery('monica')
+celery.conf.update(BROKER_URL=os.environ['REDIS_URL'], CELERY_RESULT_BACKEND=os.environ['REDIS_URL'])
 
-@app.task
+@celery.task
 def respond(number, old_state, new_state, message):
     print "responding asyncronisousfslfsaf to %s !!!: %s" % (number, message)
     # make sure there hasn't been a timeout
