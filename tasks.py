@@ -14,7 +14,7 @@ client = Client(account_sid, auth_token)
 phone = os.environ.get('TWILIO_PHONE')
 
 # CELERY APP
-celery = Celery('monica')
+celery = Celery('oh-monica')
 celery.conf.update(BROKER_URL=os.environ['REDIS_URL'], CELERY_RESULT_BACKEND=os.environ['REDIS_URL'])
 
 @celery.task
