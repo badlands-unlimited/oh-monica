@@ -2,7 +2,8 @@ from flask import Flask, request, redirect, render_template
 from twilio.twiml.messaging_response import MessagingResponse
 from twilio.rest import Client
 from flask_basicauth import BasicAuth
-import os, dataset, tasks
+import os, dataset
+from tasks import respond
 
 ##################
 # INITIALIZE APP #
@@ -44,7 +45,7 @@ def discuss():
         state = user['state']
         if body == 'test':
             print "testing this situation outgit"
-            tasks.respond.apply_async((from_number, state, 'where_were_u', 'testing 1, 2, 3'), countdown=5.0)
+            respond.apply_async((from_number, state, 'where_were_u', 'testing 1, 2, 3'), countdown=5.0)
         elif state == 'where_were_u':
             if question:
                 (new_state, response) = formulate_answer(body)
@@ -67,7 +68,7 @@ def discuss():
             response = 'srsly'
             new_state = 'srsly'
             update_state(user, new_state)
-            tasks.respond.apply_async((from_number, new_state, 'where_were_u', 'where where u'), countdown=25)
+            respond.apply_async((from_number, new_state, 'where_were_u', 'where where u'), countdown=25)
         elif state == 'come_on':
             pass
         elif state == 'why_the_q':
