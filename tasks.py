@@ -23,11 +23,10 @@ def respond(number, old_state, new_state, message):
     # make sure there hasn't been a timeout
     user = table.find_one(phone=number)
     if user and user['state'] == old_state:
-        data = {'number':number, 'state':new_state}
-        table.upsert(data, ['number'])
+        data = {'phone':number, 'state':new_state}
+        table.upsert(data, ['phone'])
 
         client.messages.create(
         to=number,
         from_=phone,
         body=message)
-
