@@ -45,6 +45,7 @@ def discuss():
         state = user['state']
         if body == 'test':
             print "testing this situation outgit"
+            print from_number, state, 'where_were_u'
             respond.delay(from_number, state, 'where_were_u', 'testing 1, 2, 3')#, countdown=5.0)
         elif state == 'where_were_u':
             if question:
