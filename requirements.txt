@@ -17,7 +17,7 @@ ipaddress==1.0.18
 itsdangerous==0.24
 Jinja2==2.9.6
 kombu==4.1.0
-Mako==1.0.7
+Mako==1.2.2
 MarkupSafe==1.0
 normality==0.4.4
 psycopg2==2.7.1
